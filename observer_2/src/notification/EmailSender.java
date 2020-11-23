@@ -20,8 +20,8 @@ public class EmailSender implements Observer<Event> {
 			PersonalData parentData = s.getParentData();
 
 			String title = "gpa updated";
-			Email emailToStudent = new Email(studentData.getEmail(), title, "Lorem ipsum");
-			Email emailToParent = new Email(parentData.getEmail(), title, "Lorem ipsum");
+			Email emailToStudent = new Email(studentData.getEmail(), title, "gpa updated: " + s.getGpa());
+			Email emailToParent = new Email(parentData.getEmail(), title, "gpa updated: " + s.getGpa());
 
 			this.send(emailToStudent);
 			this.send(emailToParent);

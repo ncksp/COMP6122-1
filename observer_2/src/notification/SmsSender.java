@@ -18,8 +18,8 @@ public class SmsSender implements Observer<Event> {
 			PersonalData studentData = s.getStudentData();
 			PersonalData parentData = s.getParentData();
 
-			Sms smsToStudent = new Sms(studentData.getPhone(), "Lorem ipsum");
-			Sms smsToParent = new Sms(parentData.getPhone(), "Lorem ipsum");
+			Sms smsToStudent = new Sms(studentData.getPhone(), "gpa updated: " + s.getGpa());
+			Sms smsToParent = new Sms(parentData.getPhone(), "gpa updated: " + s.getGpa());
 
 			this.send(smsToStudent);
 			this.send(smsToParent);

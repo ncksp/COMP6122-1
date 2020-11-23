@@ -1,7 +1,6 @@
 package model;
 
 import event.ChatEvent;
-import event.Message;
 
 public abstract class ChatMember {
 	protected String name;
@@ -19,14 +18,9 @@ public abstract class ChatMember {
 		return name;
 	}
 
-	private void broadcast(ChatEvent e) {
-		System.out.println(name + " mengirim: " + e);
-		this.room.broadcast(e);
-	}
-
 	protected void talk(String message) {
-		;
-		broadcast(new Message(this, message));
+		System.out.println(name + " mengirim: " + message);
+		room.talk(this, message);
 	}
 
 	public abstract void receive(ChatEvent e);
