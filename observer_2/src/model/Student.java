@@ -1,38 +1,29 @@
 package model;
 
-import notification.Email;
-import notification.EmailSender;
-import notification.Sms;
-import notification.SmsSender;
+import java.util.Vector;
 
-public class Student {
+import event.Event;
+import event.GPAUpdated;
+import observer.Observable;
+import observer.Observer;
+
+public class Student implements Observable<Event> {
 	private double gpa;
 	private PersonalData student;
 	private PersonalData parent;
 
-	private EmailSender emailSender;
-	private SmsSender smsSender;
+	private Vector<Observer<Event>> observers;
 
-	public Student() {
-		emailSender = new EmailSender();
-		smsSender = new SmsSender();
+	public Student(PersonalData student, PersonalData parent) {
+		this.student = student;
+		this.parent = parent;
+
+		observers = new Vector<>();
 	}
 
 	public void setGpa(double gpa) {
 		this.gpa = gpa;
-
-		String title = "gpa updated";
-		Email emailToStudent = new Email(student.getEmail(), title, "Lorem ipsum");
-		Email emailToParent = new Email(parent.getEmail(), title, "Lorem ipsum");
-
-		emailSender.send(emailToStudent);
-		emailSender.send(emailToParent);
-
-		Sms smsToStudent = new Sms(student.getPhone(), "Lorem ipsum");
-		Sms smsToParent = new Sms(parent.getPhone(), "Lorem ipsum");
-
-		smsSender.send(smsToStudent);
-		smsSender.send(smsToParent);
+		broadcast(new GPAUpdated(this));
 	}
 
 	public double getGpa() {
@@ -45,6 +36,18 @@ public class Student {
 
 	public PersonalData getParentData() {
 		return parent;
+	}
+
+	@Override
+	public void broadcast(Event message) {
+		for (Observer<Event> obs : observers) {
+			obs.update(message);
+		}
+	}
+
+	@Override
+	public void addObserver(Observer<Event> obs) {
+		observers.add(obs);
 	}
 
 	// ... other implementation removed for brevity
