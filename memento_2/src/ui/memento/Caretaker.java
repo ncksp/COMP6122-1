@@ -31,9 +31,6 @@ public class Caretaker {
 		if (mementos.empty())
 			return null;
 
-		CellCommand m = mementos.pop();
-		m.rollback();
-
-		return m;
+		return mementos.pop();
 	}
 }

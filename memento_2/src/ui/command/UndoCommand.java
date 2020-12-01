@@ -13,6 +13,7 @@ public class UndoCommand extends CellCommand {
 	@Override
 	public void execute() {
 		redo = Caretaker.instance().undo();
+		redo.rollback();
 		// command ini tidak di-snapshot
 	}
 
