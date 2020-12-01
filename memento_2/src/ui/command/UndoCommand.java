@@ -32,7 +32,10 @@ public class UndoCommand extends CellCommand {
 
 	@Override
 	protected CellCommand clone() {
-		return new UndoCommand(receiver);
+		UndoCommand c = new UndoCommand(receiver);
+		c.redo = this.redo;
+
+		return c;
 	}
 
 }
